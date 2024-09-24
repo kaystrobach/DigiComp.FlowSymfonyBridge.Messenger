@@ -17,13 +17,13 @@ class MessengerCommandController extends CommandController
 {
     use RunSymfonyCommandTrait;
 
-    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:RoutableMessageBus')]
+    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:RoutableMessageBus', lazy: false)]
     protected RoutableMessageBus $routableBus;
 
-    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:ReceiversContainer')]
+    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:ReceiversContainer', lazy: false)]
     protected ContainerInterface $receiverContainer;
 
-    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:EventDispatcher')]
+    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:EventDispatcher', lazy: false)]
     protected EventDispatcherInterface $eventDispatcher;
 
     #[Flow\Inject]
@@ -32,7 +32,7 @@ class MessengerCommandController extends CommandController
     #[Flow\InjectConfiguration]
     protected array $configuration;
 
-    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:RestartSignalCachePool')]
+    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:RestartSignalCachePool', lazy: false)]
     protected CacheItemPoolInterface $restartSignalCachePool;
 
     /**
