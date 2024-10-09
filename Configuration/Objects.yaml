@@ -121,6 +121,10 @@ DigiComp.FlowSymfonyBridge.Messenger:RestartSignalCachePool:
         factoryObjectName: 'DigiComp.FlowSymfonyBridge.Messenger:RestartSignalCache'
         factoryMethodName: 'getBackend'
 
+DigiComp.FlowSymfonyBridge.Messenger:FailureTransportContainer:
+  className: 'DigiComp\FlowSymfonyBridge\Messenger\Transport\FailureTransportContainer'
+  scope: 'singleton'
+
 Symfony\Component\Messenger\EventListener\SendFailedMessageForRetryListener:
   scope: 'singleton'
   arguments:
