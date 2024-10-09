@@ -4,18 +4,18 @@ namespace DigiComp\FlowSymfonyBridge\Messenger\Command;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cli\CommandController;
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Command\FailedMessagesRemoveCommand;
 use Symfony\Component\Messenger\Command\FailedMessagesRetryCommand;
 use Symfony\Component\Messenger\Command\FailedMessagesShowCommand;
+use Symfony\Contracts\Service\ServiceProviderInterface;
 
 class FailedCommandController extends CommandController
 {
     use RunSymfonyCommandTrait;
 
-    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:ReceiversContainer')]
-    protected ContainerInterface $receiverContainer;
+    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:FailureTransportContainer', lazy: false)]
+    protected ServiceProviderInterface $failureTransportContainer;
 
     #[Flow\InjectConfiguration]
     protected array $configuration;
@@ -37,7 +37,7 @@ class FailedCommandController extends CommandController
     {
         $command = new FailedMessagesShowCommand(
             $this->configuration['failureTransport'],
-            $this->receiverContainer->get($this->configuration['failureTransport'])
+            $this->failureTransportContainer
         );
         $this->run($command);
     }
@@ -57,7 +57,7 @@ class FailedCommandController extends CommandController
     {
         $command = new FailedMessagesRemoveCommand(
             $this->configuration['failureTransport'],
-            $this->receiverContainer->get($this->configuration['failureTransport'])
+            $this->failureTransportContainer
         );
         $this->run($command);
     }
@@ -85,7 +85,7 @@ class FailedCommandController extends CommandController
     {
         $command = new FailedMessagesRetryCommand(
             $this->configuration['failureTransport'],
-            $this->receiverContainer->get($this->configuration['failureTransport']),
+            $this->failureTransportContainer,
             $this->objectManager->get('DigiComp.FlowSymfonyBridge.Messenger:RoutableMessageBus'),
             $this->objectManager->get('DigiComp.FlowSymfonyBridge.Messenger:EventDispatcher'),
             $this->objectManager->get(LoggerInterface::class)

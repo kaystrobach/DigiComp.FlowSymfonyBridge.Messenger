@@ -20,9 +20,6 @@ class TransportsContainer implements ContainerInterface
     #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:TransportFactory', lazy: false)]
     protected TransportFactoryInterface $transportFactory;
 
-    #[Flow\Inject(lazy: false)]
-    protected FailureTransportContainer $failureTransports;
-
     /**
      * @var TransportInterface[]
      */
@@ -57,11 +54,6 @@ class TransportsContainer implements ContainerInterface
                 $transportDefinition['options'],
                 $this->objectManager->get($transportDefinition['serializer'])
             );
-            if (isset($transportDefinition['failureTransport'])) {
-                $this->failureTransports->set($id, $this->get($transportDefinition['failureTransport']));
-            } elseif (isset($this->configuration['failureTransport'])) {
-                $this->failureTransports->set($id, $this->get($this->configuration['failureTransport']));
-            }
         }
         return $this->transports[$id];
     }
