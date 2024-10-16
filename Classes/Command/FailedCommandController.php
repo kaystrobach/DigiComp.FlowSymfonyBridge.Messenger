@@ -14,7 +14,7 @@ class FailedCommandController extends CommandController
 {
     use RunSymfonyCommandTrait;
 
-    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:ReceiversContainer')]
+    #[Flow\Inject(name: 'DigiComp.FlowSymfonyBridge.Messenger:ReceiversContainer', lazy: false)]
     protected ContainerInterface $receiverContainer;
 
     #[Flow\InjectConfiguration]
