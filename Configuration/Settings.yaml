@@ -49,9 +49,4 @@ DigiComp:
         Symfony\Component\Messenger\Transport\InMemoryTransportFactory: true
         DigiComp\FlowSymfonyBridge\Messenger\Transport\FlowDoctrineTransportFactory: true
 
-      transports:
-        discard:
-          dsn: "null://"
-
-      failureTransport: "discard"
       routing: []
